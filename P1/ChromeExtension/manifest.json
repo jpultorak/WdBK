@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "Evil script injector",
+  "version": "1.0",
+  "description": "Injects a evil script into very specific page",
+  "permissions": ["activeTab", "scripting"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icon.png"
+  }
+}

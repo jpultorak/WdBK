@@ -1,0 +1,34 @@
+{
+  "transactions": [
+    {
+      "id": "91b7",
+      "sender": "Janek",
+      "receiver": "CookieMonster42",
+      "amount": 3
+    },
+    {
+      "id": "620d",
+      "sender": "Ala",
+      "receiver": "Janek",
+      "amount": 5
+    },
+    {
+      "id": "023a",
+      "sender": "Janek",
+      "receiver": "CookieMonster42",
+      "amount": 3
+    },
+    {
+      "id": "f7e8",
+      "sender": "Janek",
+      "receiver": "Ala",
+      "amount": 3
+    },
+    {
+      "id": "e4a7",
+      "sender": "Janek",
+      "receiver": "CookieMonster42",
+      "amount": 3
+    }
+  ]
+}
