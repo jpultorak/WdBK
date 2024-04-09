@@ -1,2 +1,1 @@
-# WdBK
-Intro to computer security 2024
+# Intro to computer security 2024
