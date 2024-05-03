@@ -1,8 +1,10 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import { Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
   IconButton,
+  Link,
   Menu,
   MenuItem,
   Stack,
@@ -28,13 +30,17 @@ export default function NavigationBar() {
     <AppBar position="sticky">
       <Toolbar>
         <Stack direction="row" spacing={2} alignItems="center">
-          <GlowingButton>
-            <Typography variant="body2">Dashboard</Typography>
-          </GlowingButton>
+          <Link component={RouterLink} to="/dashboard">
+            <GlowingButton>
+              <Typography variant="body2">Dashboard</Typography>
+            </GlowingButton>
+          </Link>
 
-          <GlowingButton>
-            <Typography variant="body2">Info</Typography>
-          </GlowingButton>
+          <Link component={RouterLink} to="/info">
+            <GlowingButton>
+              <Typography variant="body2">Info</Typography>
+            </GlowingButton>
+          </Link>
         </Stack>
 
         <Stack direction={'row'} justifyContent="end" flexGrow={1}>
