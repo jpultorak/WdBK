@@ -45,9 +45,13 @@ export default function Dashboard() {
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>Date</TableCell>
-                <TableCell>Transaction</TableCell>
-                <TableCell align="right">Amount (PLN)</TableCell>
+                <TableCell sx={{ color: 'primary.main' }}>Date</TableCell>
+                <TableCell sx={{ color: 'primary.main' }}>
+                  Transaction
+                </TableCell>
+                <TableCell sx={{ color: 'primary.main' }} align="right">
+                  Amount (PLN)
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
