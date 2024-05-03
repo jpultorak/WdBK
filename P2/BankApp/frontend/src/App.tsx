@@ -1,7 +1,7 @@
-import Dashboard from './pages/Dashboard';
+import Info from './pages/Info';
 
 function App() {
-  return <Dashboard />;
+  return <Info />;
 }
 
 export default App;

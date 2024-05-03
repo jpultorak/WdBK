@@ -9,6 +9,9 @@ const theme = createTheme({
     secondary: {
       main: '#00ffbf', // Cyberpunk teal
     },
+    action: {
+      disabled: '#ff007f',
+    },
     background: {
       default: '#121212', // Dark background
       paper: '#1e1e1e',

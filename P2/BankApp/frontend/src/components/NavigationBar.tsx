@@ -2,25 +2,15 @@ import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import {
   AppBar,
-  Button,
   IconButton,
   Menu,
   MenuItem,
   Stack,
   Toolbar,
   Typography,
-  styled,
 } from '@mui/material';
 import { useState } from 'react';
-
-const GlowingButton = styled(Button)(({ theme }) => ({
-  position: 'relative',
-  overflow: 'hidden',
-  '&:hover': {
-    backgroundColor: theme.palette.secondary.light,
-    boxShadow: `0px 0px 10px 5px ${theme.palette.secondary.main}`,
-  },
-}));
+import GlowingButton from './GlowingButton';
 
 export default function NavigationBar() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
