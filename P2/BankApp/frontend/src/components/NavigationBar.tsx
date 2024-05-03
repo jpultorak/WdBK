@@ -35,7 +35,7 @@ export default function NavigationBar() {
   function handleLogoutClick() {}
 
   return (
-    <AppBar>
+    <AppBar position="sticky">
       <Toolbar>
         <Stack direction="row" spacing={2} alignItems="center">
           <GlowingButton>
@@ -44,10 +44,6 @@ export default function NavigationBar() {
 
           <GlowingButton>
             <Typography variant="body2">Info</Typography>
-          </GlowingButton>
-
-          <GlowingButton>
-            <Typography variant="body2">History</Typography>
           </GlowingButton>
         </Stack>
 

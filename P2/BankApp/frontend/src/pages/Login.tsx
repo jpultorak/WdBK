@@ -12,7 +12,7 @@ import {
 
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
-export default function LoginPage() {
+export default function Login() {
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
