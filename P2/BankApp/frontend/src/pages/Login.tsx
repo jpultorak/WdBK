@@ -2,14 +2,13 @@ import {
   Avatar,
   Box,
   Button,
-  Checkbox,
-  FormControlLabel,
   Grid,
   Link,
   TextField,
   Typography,
 } from '@mui/material';
 
+import { Link as RouterLink } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export default function Login() {
@@ -58,18 +57,16 @@ export default function Login() {
           id="password"
           autoComplete="current-password"
         />
-        <FormControlLabel
-          control={<Checkbox value="remember" color="primary" />}
-          label="Remember me"
-        />
-        <Button
-          type="submit"
-          fullWidth
-          variant="contained"
-          sx={{ mt: 3, mb: 2 }}
-        >
-          Sign In
-        </Button>
+        <Link component={RouterLink} to={'/dashboard'}>
+          <Button
+            type="submit"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Sign In
+          </Button>
+        </Link>
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2">
@@ -77,8 +74,10 @@ export default function Login() {
             </Link>
           </Grid>
           <Grid item>
-            <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
+            <Link component={RouterLink} to={'/sign-up'}>
+              <Typography variant="body2">
+                Don't have an account? Sign Up
+              </Typography>
             </Link>
           </Grid>
         </Grid>

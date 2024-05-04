@@ -71,12 +71,14 @@ export default function NavigationBar() {
             </Stack>
           </MenuItem>
 
-          <MenuItem onClick={handleLogoutClick}>
-            <Stack direction="row" gap={2}>
-              <LogoutIcon />
-              <Typography>Logout</Typography>
-            </Stack>
-          </MenuItem>
+          <Link component={RouterLink} to="/login">
+            <MenuItem onClick={handleLogoutClick}>
+              <Stack direction="row" gap={2}>
+                <LogoutIcon />
+                <Typography>Logout</Typography>
+              </Stack>
+            </MenuItem>
+          </Link>
         </Menu>
       </Toolbar>
     </AppBar>
