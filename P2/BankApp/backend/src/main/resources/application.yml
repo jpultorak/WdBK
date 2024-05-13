@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: backend
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
