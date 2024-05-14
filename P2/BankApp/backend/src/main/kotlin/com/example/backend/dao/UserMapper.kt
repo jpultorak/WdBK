@@ -12,17 +12,25 @@ import org.apache.ibatis.annotations.Update
 @Mapper
 interface UserMapper {
 
-    @Select("SELECT first_name, last_name, email, balance" +
-            "FROM person" +
-            "WHERE person.id = #{id}")
+    @Select(
+        """
+        SELECT id, first_name, last_name, email, password, balance
+        FROM person
+        WHERE person.id = #{id}
+        """,
+    )
     fun getUserById(@Param("id") userId : Int) : User
 
     @Select("INSERT INTO person (first_name, last_name, email, password) VALUES (#{firstName}, #{lastName}, #{email}, #{password}) RETURNING id")
     @Options(flushCache = Options.FlushCachePolicy.TRUE)
     fun insertUser(user: UserCreated): Int
 
-    @Update("UPDATE person" +
-            "WHERE id = #{id}" +
-            "SET password = #{newPassword}")
+    @Update(
+        """
+        UPDATE person
+        SET password = #{newPassword}
+        WHERE id = #{id}     
+        """
+    )
     fun updatePassword(@Param("id") userId: Int, newPassword: String)
 }
