@@ -17,8 +17,8 @@ interface UserMapper {
             "WHERE person.id = #{id}")
     fun getUserById(@Param("id") userId : Int) : User
 
-    @Insert("INSERT INTO person (first_name, last_name, email, password) VALUES (#{firstName}, #{lastName}, #{email}, #{password})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
+    @Select("INSERT INTO person (first_name, last_name, email, password) VALUES (#{firstName}, #{lastName}, #{email}, #{password}) RETURNING id")
+    @Options(flushCache = Options.FlushCachePolicy.TRUE)
     fun insertUser(user: UserCreated): Int
 
     @Update("UPDATE person" +

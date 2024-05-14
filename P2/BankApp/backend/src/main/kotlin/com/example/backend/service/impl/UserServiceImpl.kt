@@ -18,6 +18,7 @@ class UserServiceImpl(private val userMapper: UserMapper) : UserService {
         return userMapper.getUserById(userId)
     }
 
+    @Transactional
     override fun createUser(createUserDTO: CreateUserDTO): User {
         val newUser = UserCreated(
             firstName = createUserDTO.firstName,
@@ -35,6 +36,7 @@ class UserServiceImpl(private val userMapper: UserMapper) : UserService {
             balance = BigDecimal(0.0000)
         )
     }
+    @Transactional
     override fun updatePassword(updatePasswordDTO: UpdatePasswordDTO, userId: Int) {
         userMapper.updatePassword(userId, updatePasswordDTO.newPassword)
     }
