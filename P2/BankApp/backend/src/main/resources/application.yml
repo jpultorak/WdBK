@@ -7,3 +7,5 @@ spring:
     username: admin
     password: admin
     driver-class-name: org.postgresql.Driver
+
+cors.allowed-origins: http://localhost:3000
