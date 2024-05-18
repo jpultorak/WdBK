@@ -29,7 +29,7 @@ class UserController(private val userService : UserService) {
         return ResponseEntity.ok(user)
     }
 
-    @PatchMapping("/users/{userId}")
+    @PatchMapping("/reset-password/{userId}")
     fun updatePassword(@RequestBody updatePasswordDTO: UpdatePasswordDTO, @PathVariable userId: Int): ResponseEntity<Unit> {
         userService.updatePassword(updatePasswordDTO, userId)
         return ResponseEntity.noContent().build()

@@ -2,7 +2,6 @@ package com.example.backend.dao
 
 import com.example.backend.domain.User
 import com.example.backend.domain.UserCreated
-import org.apache.ibatis.annotations.Insert
 import org.apache.ibatis.annotations.Mapper
 import org.apache.ibatis.annotations.Options
 import org.apache.ibatis.annotations.Param
