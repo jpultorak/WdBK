@@ -8,4 +8,10 @@ spring:
     password: admin
     driver-class-name: org.postgresql.Driver
 
-cors.allowed-origins: http://localhost:3000
+cors:
+  allowed-origins: http://localhost:3000
+
+security:
+  jwt:
+    secret-key: "none"
+    expiration-time: 3600

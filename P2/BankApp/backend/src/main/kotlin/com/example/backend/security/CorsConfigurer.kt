@@ -6,7 +6,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class CorsConfigurer( @Value("{cors.allowed-origins}")
+class CorsConfigurer( @Value("\${cors.allowed-origins}")
                       private val allowedOrigins: String) : WebMvcConfigurer {
 
     @Override
