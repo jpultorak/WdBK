@@ -5,30 +5,6 @@
       "sender": "a",
       "receiver": "b",
       "amount": 30
-    },
-    {
-      "id": "8eee",
-      "sender": "a",
-      "receiver": "b",
-      "amount": 30
-    },
-    {
-      "id": "5f29",
-      "sender": "a",
-      "receiver": "b",
-      "amount": 3
-    },
-    {
-      "id": "0ac5",
-      "sender": "a",
-      "receiver": "b",
-      "amount": 23
-    },
-    {
-      "id": "fbbb",
-      "sender": "a",
-      "receiver": "b",
-      "amount": 2
     }
   ]
 }
