@@ -99,20 +99,19 @@ COCO_CLASSES = [
 
 # Start video capture from the laptop camera
 cap = cv2.VideoCapture(0)
+process_this_frame = 0
+results = None
 
 while True:
     # Capture frame-by-frame
     ret, frame = cap.read()
-    if not ret:
-        break
 
-    # Perform detection
-    results = model(frame)
-    # Process detections
+    if process_this_frame == 0:
+        results = model(frame)
+
     for result in results.pred:
         for det in result:
             class_id = int(det[-1])
-            print(COCO_CLASSES[class_id])
             confidence = det[4]
             if confidence > 0.3:  # Adjust confidence threshold as needed
                 bbox = det[:4].numpy().astype(int)
@@ -129,7 +128,7 @@ while True:
                     (0, 255, 0),
                     2,
                 )
-
+    process_this_frame = (process_this_frame + 1) % 3
     # Display the resulting frame
     cv2.imshow("Frame", frame)
 
