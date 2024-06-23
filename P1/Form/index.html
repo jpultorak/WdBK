@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="form-container">
+        <input type="text" id="senderInput" placeholder="Sender">
+        <input type="text" id="receiverInput" placeholder="Receiver">
+        <input type="number" id="amountInput" placeholder="Amount">
+        <button id="submitButton" onclick="showConfirmationModal()">Submit</button>
+        <p id="confirmation"></p>
+    </div>
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <h2>Confirm</h2>
+            <p id="transactionDetails"></p>
+            <button id="cancelButton" onclick = "closeConfirmationModal()">Cancel</button>
+            <button id="confirmButton" onclick="submitTransaction()">Confirm</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
