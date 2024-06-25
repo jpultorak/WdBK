@@ -1,5 +1,8 @@
 package com.example.backend.domain
 
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
+import org.springframework.security.core.userdetails.UserDetails
 import java.math.BigDecimal
 
 data class User(
@@ -8,6 +11,38 @@ data class User(
     val lastName: String,
     val email: String,
     val password: String,
-    val balance: BigDecimal
-)
+    val balance: BigDecimal,
+    val roles: List<Role>
+) : UserDetails {
+    override fun getAuthorities(): Collection<GrantedAuthority> {
+       return this.roles.map { role -> SimpleGrantedAuthority(role.roleName) }
+    }
+
+    override fun getPassword(): String {
+        return password
+    }
+
+    override fun getUsername(): String {
+        return email
+    }
+
+    override fun isAccountNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isAccountNonLocked(): Boolean {
+        return true
+    }
+
+    override fun isCredentialsNonExpired(): Boolean {
+        return true
+    }
+
+    override fun isEnabled(): Boolean {
+        return true
+    }
+    fun fullName(): String{
+        return "$firstName $lastName"
+    }
+}
 

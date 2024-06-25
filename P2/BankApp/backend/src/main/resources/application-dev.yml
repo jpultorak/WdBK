@@ -1,0 +1,21 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  mail:
+    host: localhost
+    port: 1025
+    username: janek
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: 5000
+        timout: 3000
+        writetimeout: 5000

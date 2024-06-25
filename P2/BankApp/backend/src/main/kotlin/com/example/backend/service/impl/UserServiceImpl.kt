@@ -1,6 +1,7 @@
 package com.example.backend.service.impl
 
 import com.example.backend.dao.UserMapper
+import com.example.backend.domain.Role
 import com.example.backend.domain.User
 import com.example.backend.domain.UserCreated
 import com.example.backend.mvc.dto.input.CreateUserDTO
@@ -15,10 +16,14 @@ import java.math.BigDecimal
 class UserServiceImpl(private val userMapper: UserMapper, private val passwordService: PasswordService) : UserService {
 
     @Transactional(readOnly = true)
-    override fun getUserById(userId: Int): User {
+    override fun getById(userId: Int): User {
         return userMapper.getUserById(userId)
     }
 
+    @Transactional(readOnly = true)
+    override fun getByEmail(email: String): User {
+        return userMapper.getUserByEmail(email)
+    }
     @Transactional
     override fun createUser(createUserDTO: CreateUserDTO): User {
         val hashedPassword = passwordService.hashPassword(createUserDTO.password)
@@ -35,7 +40,8 @@ class UserServiceImpl(private val userMapper: UserMapper, private val passwordSe
             lastName = newUser.lastName,
             email = newUser.email,
             password = newUser.password,
-            balance = BigDecimal(0.0000)
+            balance = BigDecimal(0.0000),
+            roles = listOf(Role.USER)
         )
     }
     @Transactional
