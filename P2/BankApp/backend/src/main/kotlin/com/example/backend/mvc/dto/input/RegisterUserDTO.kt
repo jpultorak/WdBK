@@ -9,11 +9,11 @@ import jakarta.validation.constraints.Size
 data class RegisterUserDTO (
     @NotEmpty(message = "Firstname is mandatory")
     @NotNull(message = "Firstname is mandatory")
-    val firstname: String,
+    val firstName: String,
 
     @NotEmpty(message = "Lastname is mandatory")
     @NotNull(message = "Lastname is mandatory")
-    val lastname: String,
+    val lastName: String,
 
     @Email(message = "Email is not well formatted")
     @NotEmpty(message = "Email is mandatory")

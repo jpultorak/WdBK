@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
@@ -7,16 +6,36 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { RegisterRequest, useRegisterMutation } from '../services/apiSlice';
 
 export default function SignUp() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [register] = useRegisterMutation();
+
+  const navigate = useNavigate();
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const requestData: RegisterRequest = {
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+    };
+
+    try {
+      const { data } = await register(requestData);
+      console.log(data);
+
+      navigate('/login');
+    } catch (err) {
+      console.error('Failed to register: ', err);
+    }
   };
 
   return (
@@ -45,6 +64,8 @@ export default function SignUp() {
               id="firstName"
               label="First Name"
               autoFocus
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -55,6 +76,8 @@ export default function SignUp() {
               label="Last Name"
               name="lastName"
               autoComplete="family-name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -65,6 +88,8 @@ export default function SignUp() {
               label="Email Address"
               name="email"
               autoComplete="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -76,6 +101,8 @@ export default function SignUp() {
               type="password"
               id="password"
               autoComplete="new-password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </Grid>
         </Grid>

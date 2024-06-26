@@ -9,8 +9,19 @@ import {
 import Login from './pages/Login';
 import SignUp from './pages/SingUp';
 import NotFound from './pages/NotFound';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from './services/authSlice';
 
 function App() {
+  const dispatch = useDispatch();
+
+  const token = localStorage.getItem('token');
+
+  console.log('Getting token from localStorage:', token);
+  if (token) {
+    dispatch(setCredentials({ token: token }));
+  }
+
   return (
     <Router>
       <Routes>

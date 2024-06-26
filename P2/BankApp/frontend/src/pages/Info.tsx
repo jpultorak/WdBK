@@ -1,11 +1,10 @@
 import { Box, Container, Paper, TextField, Typography } from '@mui/material';
 import NavigationBar from '../components/NavigationBar';
 import GlowingButton from '../components/GlowingButton';
+import { useGetUserInfoQuery } from '../services/apiSlice';
 
 export default function Info() {
-  const email = 'example@gmail.com';
-  const firstName = 'Janek';
-  const lastName = 'Franek';
+  const { data, isLoading } = useGetUserInfoQuery();
 
   function handlePasswordReset() {
     console.log('Reset Password clicked');
@@ -26,19 +25,34 @@ export default function Info() {
             <Typography variant="h4" gutterBottom>
               User Information
             </Typography>
+            {isLoading || !data ? (
+              <>Loading ... </>
+            ) : (
+              <>
+                <TextField
+                  disabled
+                  label="First Name"
+                  value={data.firstName}
+                  fullWidth
+                />
+                <TextField
+                  disabled
+                  label="Last Name"
+                  value={data.lastName}
+                  fullWidth
+                />
+                <TextField
+                  disabled
+                  label="Email"
+                  value={data.email}
+                  fullWidth
+                />
 
-            <TextField
-              disabled
-              label="First Name"
-              value={firstName}
-              fullWidth
-            />
-            <TextField disabled label="Last Name" value={lastName} fullWidth />
-            <TextField disabled label="Email" value={email} fullWidth />
-
-            <GlowingButton onClick={handlePasswordReset}>
-              <Typography>I forgot my password</Typography>
-            </GlowingButton>
+                <GlowingButton onClick={handlePasswordReset}>
+                  <Typography>I forgot my password</Typography>
+                </GlowingButton>
+              </>
+            )}
           </Box>
         </Paper>
       </Container>

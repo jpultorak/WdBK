@@ -39,6 +39,6 @@ class AuthController(private val service: AuthService) {
         lastName = user.lastName,
         email = user.email,
         id = user.id,
-        balance = user.balance
+        balance = user.balance,
     )
 }

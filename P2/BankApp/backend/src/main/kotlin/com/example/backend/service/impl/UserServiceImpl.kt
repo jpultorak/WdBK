@@ -30,8 +30,8 @@ class UserServiceImpl(
 
     override fun create(registrationRequest: RegisterUserDTO): User {
         val newUser = UserCreated(
-            firstName = registrationRequest.firstname,
-            lastName = registrationRequest.lastname,
+            firstName = registrationRequest.firstName,
+            lastName = registrationRequest.lastName,
             email = registrationRequest.email,
             password = passwordEncoder.encode(registrationRequest.password),
         )

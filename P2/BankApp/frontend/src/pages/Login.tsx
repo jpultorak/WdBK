@@ -8,17 +8,35 @@ import {
   Typography,
 } from '@mui/material';
 
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useNavigate } from 'react-router-dom';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useAuthenticateMutation } from '../services/apiSlice';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setCredentials } from '../services/authSlice';
 
 export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [login] = useAuthenticateMutation();
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    try {
+      const { data } = await login({ email, password });
+      console.log('LOGIN RESPONSE DATA:', data);
+      if (data) {
+        dispatch(setCredentials({ token: data.jwtToken }));
+        localStorage.setItem('token', data.jwtToken);
+      } else throw Error('Empty jwt response');
+      navigate('/dashboard');
+    } catch (err) {
+      console.error('Failed to login: ', err);
+    }
   };
 
   return (
@@ -46,6 +64,8 @@ export default function Login() {
           name="email"
           autoComplete="email"
           autoFocus
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
         <TextField
           margin="normal"
@@ -56,17 +76,17 @@ export default function Login() {
           type="password"
           id="password"
           autoComplete="current-password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
-        <Link component={RouterLink} to={'/dashboard'}>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Sign In
-          </Button>
-        </Link>
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Sign In
+        </Button>
         <Grid container>
           <Grid item xs>
             <Link href="#" variant="body2">

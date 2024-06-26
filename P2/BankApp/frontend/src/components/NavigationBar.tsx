@@ -24,7 +24,10 @@ export default function NavigationBar() {
   function handleMenuClick(event: React.MouseEvent<HTMLElement>) {
     setAnchorEl(event.currentTarget);
   }
-  function handleLogoutClick() {}
+  function handleLogoutClick() {
+    localStorage.setItem('token', 'undefined');
+    console.log('cleared token');
+  }
 
   return (
     <AppBar position="sticky">

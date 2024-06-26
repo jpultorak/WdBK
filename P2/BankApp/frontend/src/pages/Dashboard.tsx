@@ -11,9 +11,8 @@ import {
   Paper,
 } from '@mui/material';
 import NavigationBar from '../components/NavigationBar';
+import { useGetUserInfoQuery } from '../services/apiSlice';
 
-const firstName = 'Janek';
-const balance = 1234.56;
 const transactions = [
   { id: 1, date: '2024-05-01', description: 'Shopping', amount: 1000 },
   { id: 2, date: '2024-05-02', description: 'Grocery Shopping', amount: -100 },
@@ -21,6 +20,9 @@ const transactions = [
 ];
 
 export default function Dashboard() {
+  const { data, isLoading } = useGetUserInfoQuery();
+
+  console.log(data);
   return (
     <>
       <NavigationBar />
@@ -33,12 +35,18 @@ export default function Dashboard() {
             mb: 3,
           }}
         >
-          <Typography variant="h4" gutterBottom>
-            Hello, {firstName}!
-          </Typography>
-          <Typography variant="h6" color="text.secondary">
-            Your current balance is: {balance.toFixed(2)} PLN
-          </Typography>
+          {!data || isLoading ? (
+            <>Loading...</>
+          ) : (
+            <>
+              <Typography variant="h4" gutterBottom>
+                {`Hello, ${data.firstName} ${data.lastName}!`}
+              </Typography>
+              <Typography variant="h6" color="text.secondary">
+                Your current balance is: ${data?.balance} PLN
+              </Typography>
+            </>
+          )}
         </Box>
 
         <TableContainer component={Paper}>
