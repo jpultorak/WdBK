@@ -14,6 +14,7 @@ import { useAuthenticateMutation } from '../services/apiSlice';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../services/authSlice';
+import { decreaseTabCount, increaseTabCount } from '../util/sesssion';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -29,9 +30,14 @@ export default function Login() {
     try {
       const { data } = await login({ email, password });
       console.log('LOGIN RESPONSE DATA:', data);
-      if (data) {
+      if (data && data.jwtToken) {
         dispatch(setCredentials({ token: data.jwtToken }));
         localStorage.setItem('token', data.jwtToken);
+
+        increaseTabCount();
+        window.addEventListener('beforeunload', () => {
+          decreaseTabCount();
+        });
       } else throw Error('Empty jwt response');
       navigate('/dashboard');
     } catch (err) {

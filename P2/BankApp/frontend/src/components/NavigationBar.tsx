@@ -1,5 +1,4 @@
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import LogoutIcon from '@mui/icons-material/Logout';
 import { Link as RouterLink } from 'react-router-dom';
 import {
   AppBar,
@@ -23,10 +22,6 @@ export default function NavigationBar() {
   }
   function handleMenuClick(event: React.MouseEvent<HTMLElement>) {
     setAnchorEl(event.currentTarget);
-  }
-  function handleLogoutClick() {
-    localStorage.setItem('token', 'undefined');
-    console.log('cleared token');
   }
 
   return (
@@ -73,15 +68,6 @@ export default function NavigationBar() {
               <Typography>{username}</Typography>
             </Stack>
           </MenuItem>
-
-          <Link component={RouterLink} to="/login">
-            <MenuItem onClick={handleLogoutClick}>
-              <Stack direction="row" gap={2}>
-                <LogoutIcon />
-                <Typography>Logout</Typography>
-              </Stack>
-            </MenuItem>
-          </Link>
         </Menu>
       </Toolbar>
     </AppBar>
