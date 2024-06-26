@@ -1,4 +1,4 @@
-package com.example.backend.auth
+package com.example.backend.mvc.dto.input
 
 import jakarta.validation.constraints.Email
 import jakarta.validation.constraints.NotEmpty
@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull
 import jakarta.validation.constraints.Size
 
 
-data class RegistrationRequest (
+data class RegisterUserDTO (
     @NotEmpty(message = "Firstname is mandatory")
     @NotNull(message = "Firstname is mandatory")
     val firstname: String,

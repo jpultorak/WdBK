@@ -13,9 +13,8 @@ data class User(
     val email: String,
     val password: String,
     val balance: BigDecimal,
-    val roles: List<Role>,
-    val enabled: Boolean
 ) : UserDetails, Principal {
+    private val roles: List<Role> = listOf(Role.USER, Role.ADMIN)
     override fun getAuthorities(): Collection<GrantedAuthority> {
        return this.roles.map { role -> SimpleGrantedAuthority(role.roleName) }
     }
@@ -41,7 +40,7 @@ data class User(
     }
 
     override fun isEnabled(): Boolean {
-        return enabled
+        return true
     }
     fun fullName(): String{
         return "$firstName $lastName"
