@@ -1,0 +1,5 @@
+nie zadziała
+curl https://wdbk-bank.com/ 
+
+Zadziała
+curl --cert client.crt --key client.key https://wdbk-bank.com/  
