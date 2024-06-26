@@ -1,8 +1,6 @@
 import cv2
 import torch
 
-
-# Load YOLOv7 model from local path
 model = torch.hub.load(
     "/Users/janek/dev/yolov7",
     "custom",
@@ -10,10 +8,9 @@ model = torch.hub.load(
     source="local",
     force_reload=True,
 )
-model.classes = [0]
+
 model.eval()
 
-# Load COCO classes
 COCO_CLASSES = [
     "person",
     "bicycle",
@@ -99,38 +96,53 @@ COCO_CLASSES = [
 
 # Start video capture from the laptop camera
 cap = cv2.VideoCapture(0)
-process_this_frame = 0
-results = None
+n = 15
+nth_frame = None
+while n > 0:
+    ret, nth_frame = cap.read()
+    if ret:
+        n -= 1
 
 while True:
+
     # Capture frame-by-frame
     ret, frame = cap.read()
-
-    if process_this_frame == 0:
-        results = model(frame)
+    results = model(frame)
+    person_detected = False
+    phone_detected = False
 
     for result in results.pred:
         for det in result:
             class_id = int(det[-1])
             confidence = det[4]
-            if confidence > 0.3:  # Adjust confidence threshold as needed
+
+            label = COCO_CLASSES[class_id]
+
+            if label in ("person", "cell phone") and confidence > 0.6:
                 bbox = det[:4].numpy().astype(int)
-                label = COCO_CLASSES[class_id]
-                cv2.rectangle(
-                    frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2
-                )
-                cv2.putText(
-                    frame,
-                    f"{label} {confidence:.2f}",
-                    (bbox[0], bbox[1] - 10),
-                    cv2.FONT_HERSHEY_SIMPLEX,
-                    0.5,
-                    (0, 255, 0),
-                    2,
-                )
-    process_this_frame = (process_this_frame + 1) % 3
+
+                if label == "person":
+                    person_detected = True
+                    cv2.rectangle(
+                        frame, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2
+                    )
+                    cv2.putText(
+                        frame,
+                        f"{label} {confidence:.2f}",
+                        (bbox[0], bbox[1] - 10),
+                        cv2.FONT_HERSHEY_SIMPLEX,
+                        0.5,
+                        (0, 255, 0),
+                        2,
+                    )
+                elif label == "cell phone":
+                    phone_detected = True
+
+    if person_detected and phone_detected:
+        cv2.imshow("Frame", nth_frame)
     # Display the resulting frame
-    cv2.imshow("Frame", frame)
+    else:
+        cv2.imshow("Frame", frame)
 
     # Break the loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord("q"):
