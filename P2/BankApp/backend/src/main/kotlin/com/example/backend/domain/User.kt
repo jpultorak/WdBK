@@ -11,7 +11,7 @@ data class User(
     val firstName: String,
     val lastName: String,
     val email: String,
-    val password: String,
+    val userPassword: String, // naming it password creates JVM signature conflict because both kotlin and UserDetails implement get password
     val balance: BigDecimal,
 ) : UserDetails, Principal {
     private val roles: List<Role> = listOf(Role.USER, Role.ADMIN)
@@ -20,7 +20,7 @@ data class User(
     }
 
     override fun getPassword(): String {
-        return password
+        return userPassword
     }
 
     override fun getUsername(): String {

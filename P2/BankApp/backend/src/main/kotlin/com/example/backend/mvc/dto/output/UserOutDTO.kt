@@ -7,4 +7,5 @@ data class UserOutDTO(
     val firstName: String,
     val lastName: String,
     val email: String,
+    val balance: BigDecimal
 )

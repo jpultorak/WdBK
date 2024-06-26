@@ -6,9 +6,7 @@ import org.springframework.scheduling.annotation.EnableAsync
 
 @SpringBootApplication
 @EnableAsync
-class BackendApplication {
-
-	fun main(args: Array<String>) {
-		runApplication<BackendApplication>(*args)
-	}
+class BackendApplication
+fun main(args: Array<String>) {
+	runApplication<BackendApplication>(*args)
 }

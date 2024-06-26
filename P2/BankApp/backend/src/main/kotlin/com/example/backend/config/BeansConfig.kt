@@ -12,13 +12,13 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 
 @Configuration
-class BeansConfig(private val userDetailsService: UserDetailsService) {
+class BeansConfig(private val userDetailsService: UserDetailsService, private  val passwordEncoder: PasswordEncoder) {
 
     @Bean
     fun authenticationProvider() : AuthenticationProvider {
         val authProvider = DaoAuthenticationProvider()
         authProvider.setUserDetailsService(userDetailsService)
-        authProvider.setPasswordEncoder(passwordEncoder())
+        authProvider.setPasswordEncoder(passwordEncoder)
         return authProvider
     }
 
@@ -26,8 +26,5 @@ class BeansConfig(private val userDetailsService: UserDetailsService) {
     fun authenticationManager(config: AuthenticationConfiguration): AuthenticationManager {
         return config.authenticationManager
     }
-    @Bean
-    fun passwordEncoder(): PasswordEncoder {
-        return BCryptPasswordEncoder()
-    }
+
 }

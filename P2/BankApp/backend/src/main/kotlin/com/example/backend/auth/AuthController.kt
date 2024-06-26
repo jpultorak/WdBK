@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/auth")
 @Tag(name = "Authentication")
 class AuthController(private val service: AuthService) {
 
@@ -38,6 +38,7 @@ class AuthController(private val service: AuthService) {
         firstName = user.firstName,
         lastName = user.lastName,
         email = user.email,
-        id = user.id
+        id = user.id,
+        balance = user.balance
     )
 }

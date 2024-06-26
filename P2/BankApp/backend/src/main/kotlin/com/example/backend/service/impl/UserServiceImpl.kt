@@ -5,6 +5,8 @@ import com.example.backend.domain.User
 import com.example.backend.domain.UserCreated
 import com.example.backend.mvc.dto.input.RegisterUserDTO
 import com.example.backend.service.UserService
+import org.springframework.context.annotation.Bean
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -39,7 +41,7 @@ class UserServiceImpl(
             firstName = newUser.firstName,
             lastName = newUser.lastName,
             email = newUser.email,
-            password = newUser.password,
+            userPassword = newUser.password,
             balance = BigDecimal(0.000)
         )
     }
