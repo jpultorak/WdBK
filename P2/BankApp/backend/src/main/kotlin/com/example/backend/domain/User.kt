@@ -4,6 +4,7 @@ import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 import java.math.BigDecimal
+import java.security.Principal
 
 data class User(
     val id: Int,
@@ -12,8 +13,9 @@ data class User(
     val email: String,
     val password: String,
     val balance: BigDecimal,
-    val roles: List<Role>
-) : UserDetails {
+    val roles: List<Role>,
+    val enabled: Boolean
+) : UserDetails, Principal {
     override fun getAuthorities(): Collection<GrantedAuthority> {
        return this.roles.map { role -> SimpleGrantedAuthority(role.roleName) }
     }
@@ -39,10 +41,14 @@ data class User(
     }
 
     override fun isEnabled(): Boolean {
-        return true
+        return enabled
     }
     fun fullName(): String{
         return "$firstName $lastName"
+    }
+
+    override fun getName(): String {
+        return email
     }
 }
 
