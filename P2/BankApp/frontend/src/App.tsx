@@ -11,15 +11,13 @@ import SignUp from './pages/SingUp';
 import NotFound from './pages/NotFound';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from './services/authSlice';
-import { useEffect } from 'react';
-import { handleSessionStorage } from './util/sesssion';
 
 function App() {
   const dispatch = useDispatch();
 
-  const token = localStorage.getItem('token');
+  const token = sessionStorage.getItem('token');
 
-  console.log('Getting token from localStorage:', token);
+  console.log('Getting token from sessionStorage:', token);
   if (token) {
     dispatch(setCredentials({ token: token }));
   }
