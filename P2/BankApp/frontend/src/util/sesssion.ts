@@ -1,21 +1,27 @@
 export const increaseTabCount = () => {
-  const sessionCount = sessionStorage.getItem('sessionCount');
-  if (!sessionCount) {
-    sessionStorage.setItem('sessionCount', '1');
+  const tabCount = localStorage.getItem('tabCount');
+  if (!tabCount) {
+    localStorage.setItem('tabCount', '1');
     return true;
   } else {
-    const count = parseInt(sessionCount) + 1;
-    sessionStorage.setItem('sessionCount', count.toString());
+    const count = parseInt(tabCount) + 1;
+    localStorage.setItem('tabCount', count.toString());
     return false;
   }
 };
-
+export const getTabCount = () => {
+  const tabCount = localStorage.getItem('tabCount');
+  if (tabCount == null) {
+    return 0;
+  }
+  return parseInt(tabCount);
+};
 export const decreaseTabCount = () => {
-  const sessionCount = sessionStorage.getItem('sessionCount');
-  if (!sessionCount) {
+  const tabCount = localStorage.getItem('tabCount');
+  if (!tabCount) {
     return;
   } else {
-    const count = parseInt(sessionCount) - 1;
-    sessionStorage.setItem('sessionCount', count.toString());
+    const count = parseInt(tabCount) - 1;
+    localStorage.setItem('tabCount', count.toString());
   }
 };

@@ -14,7 +14,11 @@ import { useAuthenticateMutation } from '../services/apiSlice';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../services/authSlice';
-import { decreaseTabCount, increaseTabCount } from '../util/sesssion';
+import {
+  decreaseTabCount,
+  getTabCount,
+  increaseTabCount,
+} from '../util/sesssion';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -30,16 +34,22 @@ export default function Login() {
     try {
       const { data } = await login({ email, password });
       console.log('LOGIN RESPONSE DATA:', data);
-      if (data && data.jwtToken) {
-        dispatch(setCredentials({ token: data.jwtToken }));
-        localStorage.setItem('token', data.jwtToken);
 
+      if (data && data.jwtToken) {
+        const tabCount = getTabCount();
+        if (tabCount >= 1) {
+          window.alert('Too many open tabs!');
+          throw Error('Too many open tabs');
+        }
         increaseTabCount();
         window.addEventListener('beforeunload', () => {
           decreaseTabCount();
         });
+        dispatch(setCredentials({ token: data.jwtToken }));
+        sessionStorage.setItem('token', data.jwtToken);
+
+        navigate('/dashboard');
       } else throw Error('Empty jwt response');
-      navigate('/dashboard');
     } catch (err) {
       console.error('Failed to login: ', err);
     }
