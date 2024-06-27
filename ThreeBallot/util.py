@@ -2,29 +2,34 @@ import random
 from pprint import pprint
 
 
-def generate_triplets(total_options, total_voters):
+def generate_triplets(total_options, total_voters, total_races):
     triplets = []
     for _ in range(total_voters):
 
-        # Randomly select chosen option for each voter
-        vote = random.randint(0, total_options - 1)
-        triplet = [[0] * total_options for _ in range(3)]
+        # races[n] is vote for nth races
+        triplet = [
+            tuple([0] * total_races for _ in range(total_options)) for _ in range(3)
+        ]
 
-        # this option is marked on exactly two ballots
-        chosen_ballots = random.sample([0, 1, 2], 2)
-        triplet[chosen_ballots[0]][vote] = 1
-        triplet[chosen_ballots[1]][vote] = 1
+        for race_number in range(total_races):
 
-        # other options receive exactly one vote
-        for option in range(total_options):
-            if option != vote:
-                ballot = random.randint(0, 1)
-                triplet[ballot][option] = 1
+            # Randomly select chosen option for each voter
+            vote = random.randint(0, total_options - 1)
+
+            # this option is marked on exactly two ballots
+            chosen_ballots = random.sample([0, 1, 2], 2)
+            triplet[chosen_ballots[0]][vote][race_number] = 1
+            triplet[chosen_ballots[1]][vote][race_number] = 1
+
+            # other options receive exactly one vote
+            for option in range(total_options):
+                if option != vote:
+                    ballot = random.randint(0, 1)
+                    triplet[ballot][option][race_number] = 1
 
         assert is_legal_triplet(triplet)
         triplets.append(sorted(triplet))
 
-    assert len(triplets) == total_voters
     return sorted(triplets)
 
 
@@ -35,35 +40,40 @@ def strips_from_triplets(triplets):
 
 
 def is_legal_triplet(triplet):
+
     # each triplet has three ballots
-    assert len(triplet) == 3
+    if len(triplet) != 3:
+        return False
+
     # each ballot has same ammount of options
-    assert len(triplet[0]) == len(triplet[1]) and len(triplet[1]) == len(triplet[2])
+    if len(triplet[0]) != len(triplet[1]) or len(triplet[1]) != len(triplet[2]):
+        return False
 
     total_options = len(triplet[0])
-    res = [a + b + c for a, b, c in zip(triplet[0], triplet[1], triplet[2])]
+    total_races = len(triplet[0][0])
 
-    twos, ones = res.count(2), res.count(1)
-    return twos == 1 and twos + ones == total_options
+    for race in range(total_races):
+        votes = [0 for _ in range(total_options)]
+
+        for strip in range(3):
+            for option in range(total_options):
+                votes[option] += triplet[strip][option][race]
+        twos = votes.count(2)
+        ones = votes.count(1)
+
+        # max one candidate should receive two votes, and no candidate should receive
+        # above 2, or 0 votes
+        if twos > 1 or twos + ones != total_options:
+            return False
+    return True
 
 
 if __name__ == "__main__":
-    total_options = 20
-    total_voters = 100
-
-    triplets = generate_triplets(total_options, total_voters)
-    strips = strips_from_triplets(triplets)
-    pprint(triplets)
-    print("\nShuffled strips from triplets:")
-    pprint(strips)
-
-    total = 0
-    for i in range(len(strips)):
-        for j in range(i + 1, len(strips)):
-            for k in range(j + 1, len(strips)):
-                triplet = [strips[i], strips[j], strips[k]]
-                if is_legal_triplet(triplet):
-                    total += 1
-            #  print(triplet, is_legal_triplet(triplet))
-
-    print(total)
+    total_options = 4
+    total_voters = 2
+    total_races = 2
+    triplets = generate_triplets(total_options, total_voters, total_races)
+    # for vote in triplets:
+    #     print("Vote:")
+    #     pprint(vote)
+    #     print("-------")
