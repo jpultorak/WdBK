@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: backend
+
+  profiles:
+    active: dev
+
+# for file upload, might not be necessary for this app
+  servlet:
+    multipart:
+      max-file-size: 50MB
+
+server:
+  servlet:
+    context-path: /api
+
+springdoc:
+    default-produces-media-type: application/json
+
+cors:
+  allowed-origins: http://localhost:3000
+
+
+
+

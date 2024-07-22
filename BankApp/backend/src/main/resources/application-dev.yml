@@ -1,0 +1,29 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+  mail:
+    host: localhost
+    port: 1025
+    username: janek
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enable: true
+        connectiontimeout: 5000
+        timout: 3000
+        writetimeout: 5000
+
+application:
+  security:
+    jwt:
+      secret-key: o8cwAoDDXG6CsAOVwzuODeCBchTCNE2i2N4zhz2cqctMytjA9IY4L5hADbAkiYmT2zz3k4PGiiUjH9t4qgDogj3GzG0kteP7tg6TSz6ilcLil5mIOWUgodMBIAiFlAte
+      expiration: 8640000
+    cors:
+      allowed-origins: http://localhost:5173
