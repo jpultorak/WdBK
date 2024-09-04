@@ -13,20 +13,18 @@ Według https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-XSS-Protecti
 
 Lepsze - Content-Security-Policy
 ### X-Content-Type-Options
-Jest tylko jedna opcja - nosniffa
+Jest tylko jedna opcja - nosniff
 Wtedy przeglądarka nie może sama interpretować typu danych. Przykładowo drive-by-downloads, np przeglądarka może uznać coś co ma explicite typ text/plain, za application/javascript i wykonać skrypt. Alternatywnie przy uploadowaniu danych.
 
 ### Strict-Transport-Security
-Bez - Narażamy się na man in the middle attack. Np. załóżmy, że jest wifi na lotnisku, tak naprawdę będące własnością hakera.Wpisujemy http://bank.com i haker przechwytuje nasz request i kieruje do swojej strony. Z HSTS nie ma tego problemu, ponieważ zakładając ze kiedys odwiedzilismy bank, to http od razu zostanie zamienione https przez przeglądarke.
+Bez - Narażamy się na man in the middle attack. Np. załóżmy, że jest wifi na lotnisku, tak naprawdę będące własnością hakera. Wpisujemy http://bank.com i haker przechwytuje nasz request i kieruje do swojej strony. Z HSTS nie ma tego problemu, ponieważ zakładając ze kiedys odwiedzilismy bank, to http od razu zostanie zamienione https przez przeglądarke.
 
 ### Flagi dla ciasteczek
 * Secure - bez tego ciasateczka mogą być przesyłane przez HTTP, a więc podatne na MiM attack
 * HttpOnly - bez tego ciasteczka mogą być czytane, modyfikowane przez JS, z tą flagą tylko przez HTTP (Set-cookie). Daje to jakiś dodatkowy stopień ochrony, jeśli atakujący znajdzie exploit XSS.
 
-* SameSite
-
 przykłady (bez HttpOnly, X-Frame, Same-Site): aplikacja banku w iframe
-przykład(Z HttpOnly, bez SameSite): Mamy aplikację bankową bez SameSite, która używa ciasteczek z id sesji. Atakujący tworzy stronę, która automatycznie wysyła request z przelewem do banku. Użytkownik otwiera tę stronę (np. kliknął w złego linka albo coś w tym stylu) i request się wysyła, przekazując przy tym ciasteczko z sesją - bank zatwierdza przelew. Oczywiście żaden bank nie ma tak lipnych zabezpieczeń (np. jest zazwyczaj 2FA).
+przykład(Z HttpOnly, bez SameSite): Mamy aplikację bankową bez SameSite, która używa ciasteczek z id sesji. Atakujący tworzy stronę, która automatycznie wysyła request z przelewem do banku. Użytkownik otwiera tę stronę (np. kliknął w złego linka) i request się wysyła, przekazując przy tym ciasteczko z sesją - bank zatwierdza przelew. Oczywiście żaden bank nie ma tak lipnych zabezpieczeń (np. jest zazwyczaj 2FA).
 https://www.invicti.com/learn/cookie-security-flags/
 
 
@@ -61,13 +59,25 @@ BankApp/frontend/src/pages/Login.tsx - logowanie
 
 
 ## z6
-w folderze /cert
+w /cert
+
+- ca.crt certyfikat używany przez serwer (nginx) do weryfikowania certyfikatów klienta
+- ca.key klucz prywatny używany do podpisywania certyfikatów klienta
+- client.crt certyfikat klienta
+- client.key klucz prywatny klienta
+- client.csr - Client Signing Request
+- ca.srl
+
+
+Klient generuje klucz prywatny (client.key) i csr (client.csr). Csr wysyłany jest do serwera, który podpisuje go przy użyciu swojego klucza prywatnego (ca.key). Wynikiem tego jest certyfikat dla klienta (client.crt). Serwer ma też oprócz tego własny certyfikat wydany przez CA. Mając to, klient i serwer mogą zrobić Mutual TLS Handshake - zarówno serwer jak i klient są w stanie zweryfikować swoje tożsamości
+
+curl https://wdbk-bank.com/
 nie zadziała
 400 Bad Request
 No required SSL certificate was sent
-curl https://wdbk-bank.com/ 
 
-Zadziała i zwróci stronę przywitalną nginxa
+
+Zadziała i zwróci stronę przywitalną nginxa:
 curl --cert client.crt --key client.key https://wdbk-bank.com/ 
 
 ## z7
